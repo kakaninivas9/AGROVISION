@@ -69,3 +69,34 @@ test_output.txt
 mongo_result.txt
 result.json
 Summarize_a_PDF_I_ll_attach_next.md
+
+# PPT / Presentation files
+*.pptx
+*.ppt
+
+# Generated images
+Gemini_Generated_Image_*
+
+# MongoDB memory server cache
+**/node_modules/.cache/
+**/.cache/
+
+# Large model/dataset files
+*.h5
+*.tflite
+*.pb
+*.onnx
+*.pkl
+*.joblib
+model_training/
+
+# Colab outputs
+colab/
+
+# Reports & scratch
+AgroVision_Report_*.txt
+
+# Large downloads
+*.crdownload
+*.vsix
+*.exe

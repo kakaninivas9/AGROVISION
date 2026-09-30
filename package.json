@@ -1,0 +1,15 @@
+{
+  "name": "agrovision",
+  "version": "1.0.0",
+  "description": "AgroVision AI Agriculture Platform",
+  "private": true,
+  "main": "agrovision/backend/src/index.js",
+  "scripts": {
+    "postinstall": "cd agrovision/backend && npm install",
+    "build": "cd agrovision/backend && npm install",
+    "start": "cd agrovision/backend && npm start"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}

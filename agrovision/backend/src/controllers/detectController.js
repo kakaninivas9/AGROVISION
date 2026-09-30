@@ -5,7 +5,15 @@ const Groq = require("groq-sdk");
 const fs = require("fs");
 const path = require("path");
 const Scan = require("../models/Scan");
-const tf = require("@tensorflow/tfjs");
+// TensorFlow is optional (devDependency) - only used for local model fallback in dev
+let tf = null;
+try {
+  if (process.env.NODE_ENV !== "production") {
+    tf = require("@tensorflow/tfjs");
+  }
+} catch (e) {
+  // tfjs not installed in production - that is expected
+}
 
 const genAI = new GoogleGenerativeAI(process.env.GEMINI_API_KEY);
 const groq = new Groq({ apiKey: process.env.GROQ_API_KEY });
@@ -501,3 +509,4 @@ const detectDiseaseHF = async (req, res) => {
 };
 
 module.exports = { detectDisease, detectDiseaseHF, getScanHistory, loadLocalModel };
+

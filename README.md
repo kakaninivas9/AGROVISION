@@ -26,7 +26,7 @@ CGUARD/
 ├── docs/
 │   ├── mobile_integration.md      ← Android / iOS / React Native guide
 │   └── deployment.md              ← Colab / Pi / Cloud / Docker guide
-├── requirements.txt
+├── requirements-ml.txt        ← Optional ML training dependencies
 └── README.md
 ```
 
@@ -199,8 +199,8 @@ See [`docs/deployment.md`](docs/deployment.md) for:
 # Clone / open project folder
 cd CGUARD
 
-# Install Python dependencies
-pip install -r requirements.txt
+# Install Python ML dependencies (Optional, for training models)
+pip install -r requirements-ml.txt
 
 # Run API server
 python api/app.py
