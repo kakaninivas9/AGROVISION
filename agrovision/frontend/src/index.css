@@ -1,0 +1,156 @@
+@import url('https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=Inter:wght@300;400;500;600;700&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    --color-obsidian: #0f111a;
+    --color-obsidian-light: #161a2b;
+    --color-emerald: #10b981;
+    --glass-bg: rgba(22, 26, 43, 0.4);
+    --glass-border: rgba(255, 255, 255, 0.05);
+  }
+
+  body {
+    @apply bg-[#0b0d14] text-slate-200 font-sans tracking-wide antialiased min-h-screen overflow-x-hidden;
+    background-image: 
+      radial-gradient(circle at 15% 50%, rgba(16, 185, 129, 0.04), transparent 30%),
+      radial-gradient(circle at 85% 30%, rgba(59, 130, 246, 0.04), transparent 30%);
+    background-attachment: fixed;
+    animation: breathe 10s ease-in-out infinite alternate;
+  }
+
+  @keyframes breathe {
+    0% { background-position: 0% 0%; }
+    100% { background-position: 2% 2%; }
+  }
+
+  h1, h2, h3, h4, h5, h6 {
+    @apply font-bold tracking-tight text-white font-sans;
+  }
+}
+
+
+@layer components {
+  /* ── Layout ── */
+  .layout-grid {
+    @apply flex h-screen w-full relative overflow-hidden;
+  }
+
+  .sidebar { 
+    @apply bg-[#0c0e15]/80 backdrop-blur-2xl border-r border-white/5 p-6 flex flex-col gap-6 fixed inset-y-0 left-0 w-[260px] z-50 transition-transform duration-300;
+  }
+
+  .main-content {
+    @apply flex-1 ml-[260px] p-6 md:p-10 h-screen overflow-y-auto relative scroll-smooth;
+  }
+
+  /* ── Glassmorphism Core (Bento / Cards) ── */
+  .glass {
+    background: var(--glass-bg);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border: 1px solid var(--glass-border);
+    box-shadow: 0 10px 40px -10px rgba(0,0,0,0.5);
+  }
+
+  .card {
+    @apply rounded-3xl p-6 relative transition-all duration-700 ease-out overflow-hidden;
+  }
+
+  .card::before {
+    content: '';
+    @apply absolute inset-0 -translate-x-[150%] bg-gradient-to-r from-transparent via-white/5 to-transparent skew-x-12 transition-transform duration-1000 ease-out;
+  }
+
+  .card:hover::before {
+    @apply translate-x-[150%];
+  }
+
+  .card:hover {
+    @apply border-emerald-500/30 bg-[#161a2b]/70;
+    transform: translateY(-4px) scale(1.01);
+    box-shadow: 0 25px 50px -12px rgba(0,0,0,0.6), inset 0 0 0 1px rgba(16, 185, 129, 0.1);
+  }
+
+  /* ── Navigation ── */
+  .nav-link {
+    @apply flex items-center gap-4 px-4 py-3.5 rounded-2xl text-slate-400 font-bold tracking-wide transition-all duration-300 cursor-pointer text-[13px] uppercase;
+  }
+  
+  .nav-link:hover {
+    @apply text-white bg-white/5 translate-x-1;
+  }
+  
+  .nav-link.active {
+    @apply text-emerald-400 bg-emerald-500/10 shadow-[0_0_20px_rgba(16,185,129,0.1)] border border-emerald-500/20 backdrop-blur-md translate-x-2;
+  }
+
+  /* ── Progress & Data Visuals ── */
+  .circular-progress {
+    @apply relative flex items-center justify-center font-black rounded-full;
+    background: radial-gradient(closest-side, #0f111a 80%, transparent 81% 100%),
+                conic-gradient(var(--color) calc(var(--progress) * 1%), rgba(255,255,255,0.03) 0);
+  }
+
+  .health-container {
+    @apply flex justify-center py-4 relative;
+  }
+
+  .circular-chart {
+    @apply block max-w-full drop-shadow-[0_0_15px_rgba(16,185,129,0.3)];
+  }
+
+  .circular-chart .circle-bg {
+    fill: none;
+    stroke: rgba(255, 255, 255, 0.03);
+    stroke-width: 2.5;
+  }
+
+  .circular-chart .circle {
+    fill: none;
+    stroke-width: 2.5;
+    stroke-linecap: round;
+    transition: stroke-dasharray 1.5s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+
+  .pulse-dot {
+    @apply w-2 h-2 rounded-full relative;
+  }
+  .pulse-dot::after {
+    content: '';
+    @apply absolute inset-0 rounded-full animate-ping opacity-75;
+    background-color: inherit;
+  }
+
+  .shimmer-box {
+    @apply relative overflow-hidden bg-white/5;
+  }
+  .shimmer-box::after {
+    content: '';
+    @apply absolute inset-0 -translate-x-full;
+    background: linear-gradient(90deg, transparent, rgba(255,255,255,0.08), transparent);
+    animation: shimmerEffect 2s infinite;
+  }
+  @keyframes shimmerEffect {
+    100% { transform: translateX(100%); }
+  }
+}
+
+/* ── Custom Scrollbar ── */
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: rgba(255, 255, 255, 0.1);
+  border-radius: 10px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: rgba(255, 255, 255, 0.2);
+}

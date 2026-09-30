@@ -1,0 +1,293 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CROP GUARD PRO – SMART FARMING SYSTEM</title>
+    <link rel="stylesheet" href="style.css">
+    <!-- Google Fonts: Outfit and Inter -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <!-- Phosphor Icons -->
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+    <!-- Chart.js -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body class="dark-mode">
+    <script>
+        // Inline Auth Guard to prevent flicker
+        if (!localStorage.getItem('token') && !window.location.pathname.includes('login.html') && !window.location.pathname.includes('register.html')) {
+            window.location.href = 'login.html';
+        }
+    </script>
+    <div class="app-container">
+        <!-- Sidebar Navigation -->
+        <nav class="sidebar">
+            <div class="logo-section">
+                <div class="logo-icon">
+                    <i class="ph-fill ph-shield-checkered"></i>
+                </div>
+                <div class="logo-text">
+                    <h1>CROP GUARD <span>PRO</span></h1>
+                    <p>Smart Farming System</p>
+                </div>
+            </div>
+            <ul class="nav-links">
+                <li class="active"><a href="#"><i class="ph ph-squares-four"></i> Dashboard</a></li>
+                <li><a href="#"><i class="ph ph-thermometer"></i> Sensors</a></li>
+                <li><a href="#"><i class="ph ph-chart-line-up"></i> Analytics</a></li>
+                <li><a href="#"><i class="ph ph-bell"></i> Alerts <span class="badge">3</span></a></li>
+                <li><a href="#"><i class="ph ph-gear"></i> Settings</a></li>
+            </ul>
+            <div class="sidebar-footer">
+                <div class="theme-toggle" id="theme-toggle">
+                    <i class="ph ph-moon"></i>
+                    <span>Dark Mode</span>
+                    <div class="toggle-switch"></div>
+                </div>
+            </div>
+        </nav>
+
+        <!-- Main Content Area -->
+        <main class="main-content">
+            <!-- Header section -->
+            <header class="header">
+                <div class="welcome-text">
+                    <h2 id="welcome-message">Harvest Command Center</h2>
+                    <p id="current-date">Saturday, March 28, 2026</p>
+                </div>
+                <div class="header-actions">
+                    <div class="weather-widget glass">
+                        <i class="ph ph-cloud-sun"></i>
+                        <div class="weather-info">
+                            <span class="temp">28°C</span>
+                            <span class="condition">Sunny Intervals</span>
+                        </div>
+                    </div>
+                    <div class="status-indicator">
+                        <div class="pulse-dot"></div>
+                        <span>SYSTEM ONLINE</span>
+                    </div>
+                    <div class="user-info">
+                        <div class="user-details">
+                            <span class="user-name" id="display-user-name">Farmer Joe</span>
+                            <button id="logout-btn" class="btn-logout">
+                                <i class="ph ph-sign-out"></i> Logout
+                            </button>
+                        </div>
+                        <div class="user-profile">
+                            <img id="user-avatar" src="https://ui-avatars.com/api/?name=Farmer+Joe&background=10b981&color=fff" alt="User">
+                        </div>
+                    </div>
+                </div>
+            </header>
+
+            <!-- Dashboard Grid -->
+            <div class="dashboard-grid">
+                <!-- Row 1: Sensor Cards -->
+                <div class="sensor-row">
+                    <!-- Soil Moisture Gauge -->
+                    <div class="card sensor-card glass animate-slide-up" style="--delay: 0.1s">
+                        <div class="card-header">
+                            <i class="ph-fill ph-drop color-blue"></i>
+                            <h3>Soil Moisture</h3>
+                        </div>
+                        <div class="gauge-container">
+                            <svg class="gauge" viewBox="0 0 100 50">
+                                <path class="gauge-bg" d="M10 45 A 40 40 0 0 1 90 45" />
+                                <path id="moisture-gauge" class="gauge-fill color-blue-stroke" d="M10 45 A 40 40 0 0 1 90 45" style="stroke-dasharray: 0, 126;" />
+                            </svg>
+                            <div class="gauge-value">
+                                <span id="val-moisture">65</span>%
+                            </div>
+                        </div>
+                        <p class="card-footer">Optimal range: 60-80%</p>
+                    </div>
+
+                    <!-- Temperature -->
+                    <div class="card sensor-card glass animate-slide-up" style="--delay: 0.2s">
+                        <div class="card-header">
+                            <i class="ph-fill ph-thermometer-hot color-orange"></i>
+                            <h3>Temperature</h3>
+                        </div>
+                        <div class="sensor-value">
+                            <span id="val-temp">24.5</span>°C
+                        </div>
+                        <div class="mini-graph" id="temp-mini-graph">
+                            <!-- Mini Sparkline placeholder -->
+                            <div class="sparkline-bar" style="height: 40%"></div>
+                            <div class="sparkline-bar" style="height: 50%"></div>
+                            <div class="sparkline-bar" style="height: 45%"></div>
+                            <div class="sparkline-bar" style="height: 60%"></div>
+                            <div class="sparkline-bar" style="height: 55%"></div>
+                        </div>
+                        <p class="card-footer">Rising (+1.2° since 08:00)</p>
+                    </div>
+
+                    <!-- Humidity -->
+                    <div class="card sensor-card glass animate-slide-up" style="--delay: 0.3s">
+                        <div class="card-header">
+                            <i class="ph-fill ph-waves color-cyan"></i>
+                            <h3>Humidity</h3>
+                        </div>
+                        <div class="sensor-value">
+                            <span id="val-humidity">48</span>%
+                        </div>
+                        <div class="progress-bar-container">
+                            <div class="progress-bar color-cyan-bg" id="humidity-bar" style="width: 48%"></div>
+                        </div>
+                        <p class="card-footer">Condition: Stable</p>
+                    </div>
+
+                    <!-- Water Level -->
+                    <div class="card sensor-card glass animate-slide-up" style="--delay: 0.4s">
+                        <div class="card-header">
+                            <i class="ph-fill ph-waves color-blue"></i>
+                            <h3>Water Level</h3>
+                        </div>
+                        <div class="sensor-value">
+                            <span id="val-water">82</span>%
+                        </div>
+                        <div class="liquid-container">
+                            <div class="liquid color-blue-bg" id="water-level" style="height: 82%"></div>
+                        </div>
+                        <p class="card-footer">Tank Reservoir: High</p>
+                    </div>
+                </div>
+
+                <!-- Row 2: NPK, Health Score, and Recommendations -->
+                <div class="main-stats-row">
+                    <!-- NPK Values -->
+                    <div class="card glass animate-slide-up flex-3" style="--delay: 0.5s">
+                        <div class="card-header">
+                            <i class="ph-fill ph-flask color-purple"></i>
+                            <h3>Soil Nutrients (NPK)</h3>
+                        </div>
+                        <div class="npk-grid">
+                            <div class="npk-item">
+                                <span class="label">Nitrogen</span>
+                                <div class="circular-progress" style="--progress: 75; --color: #a855f7;">
+                                    <span class="value" id="val-n">75</span>
+                                </div>
+                            </div>
+                            <div class="npk-item">
+                                <span class="label">Phosphorus</span>
+                                <div class="circular-progress" style="--progress: 42; --color: #22d3ee;">
+                                    <span class="value" id="val-p">42</span>
+                                </div>
+                            </div>
+                            <div class="npk-item">
+                                <span class="label">Potassium</span>
+                                <div class="circular-progress" style="--progress: 68; --color: #facc15;">
+                                    <span class="value" id="val-k">68</span>
+                                </div>
+                            </div>
+                        </div>
+                        <p class="card-footer">Unit: mg/kg | Last Scan: 10 mins ago</p>
+                    </div>
+
+                    <!-- Health Score -->
+                    <div class="card glass animate-slide-up flex-1 highlight-card" style="--delay: 0.6s">
+                        <h3>Farm Health Score</h3>
+                        <div class="health-container">
+                            <div class="health-radial">
+                                <svg viewBox="0 0 36 36" class="circular-chart green">
+                                    <path class="circle-bg" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" />
+                                    <path id="health-circle" class="circle" stroke-dasharray="92, 100" d="M18 2.0845 a 15.9155 15.9155 0 0 1 0 31.831 a 15.9155 15.9155 0 0 1 0 -31.831" />
+                                    <text x="18" y="20.35" class="percentage" id="val-health">92%</text>
+                                </svg>
+                            </div>
+                        </div>
+                        <div class="health-meta">
+                            <span class="status healthy">EXCELLENT</span>
+                            <p>Crop condition: Tomato (Stage 3)</p>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Row 3: Alerts and Recommendations -->
+                <div class="action-panels-row">
+                    <!-- Alerts Panel -->
+                    <div class="card glass animate-slide-up" style="--delay: 0.7s">
+                        <div class="card-header no-border">
+                            <h3>Smart Alerts</h3>
+                            <span class="count red">2 Active</span>
+                        </div>
+                        <div class="alert-list">
+                            <div class="alert-item red">
+                                <i class="ph-fill ph-warning-circle"></i>
+                                <div class="alert-content">
+                                    <h4>Low Nitrogen Detected</h4>
+                                    <p>Plot B requires immediate fertilization.</p>
+                                </div>
+                                <span class="time">2m ago</span>
+                            </div>
+                            <div class="alert-item yellow">
+                                <i class="ph-fill ph-thermometer-bold"></i>
+                                <div class="alert-content">
+                                    <h4>High Temperature Peak</h4>
+                                    <p>Greenhouse 1 cooling suggested.</p>
+                                </div>
+                                <span class="time">15m ago</span>
+                            </div>
+                            <div class="alert-item green">
+                                <i class="ph-fill ph-check-circle"></i>
+                                <div class="alert-content">
+                                    <h4>Irrigation Complete</h4>
+                                    <p>Plot A soil moisture reached 80%.</p>
+                                </div>
+                                <span class="time">1h ago</span>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- Recommendations Panel -->
+                    <div class="card glass animate-slide-up" style="--delay: 0.8s">
+                        <div class="card-header no-border">
+                            <h3>AI Recommendations</h3>
+                        </div>
+                        <div class="rec-list">
+                            <div class="rec-card">
+                                <div class="rec-icon"><i class="ph ph-brandy"></i></div>
+                                <div class="rec-body">
+                                    <h4>Irrigation Advised</h4>
+                                    <p>Evapotranspiration rates are high today. Schedule watering for 18:00.</p>
+                                    <button class="btn btn-primary-sm">Schedule Now</button>
+                                </div>
+                            </div>
+                            <div class="rec-card">
+                                <div class="rec-icon"><i class="ph ph-sun"></i></div>
+                                <div class="rec-body">
+                                    <h4>Weather Risk Detected</h4>
+                                    <p>Heavy rainfall expected in 48h. Clear drainage channels in Plot C.</p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Row 4: Live Charts -->
+                <div class="charts-row">
+                    <div class="card glass animate-slide-up" style="--delay: 0.9s">
+                        <div class="card-header">
+                            <h3>Live Telemetry History</h3>
+                            <div class="chart-toggles">
+                                <span class="toggle active" data-chart="moisture">Moisture</span>
+                                <span class="toggle" data-chart="temp">Temperature</span>
+                                <span class="toggle" data-chart="humidity">Humidity</span>
+                            </div>
+                        </div>
+                        <div class="chart-container">
+                            <canvas id="liveTimelineChart"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <!-- Script Entry Point -->
+    <script src="script.js?v=2"></script>
+</body>
+</html>

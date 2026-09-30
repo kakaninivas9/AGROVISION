@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Register - CROP GUARD PRO</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+</head>
+<body class="dark-mode auth-page">
+    <div class="auth-container">
+        <div class="auth-card glass animate-slide-up" style="--delay: 0.1s">
+            <div class="auth-header">
+                <div class="logo-icon scale-lg">
+                    <i class="ph-fill ph-shield-checkered"></i>
+                </div>
+                <h2>Create Account</h2>
+                <p>Join the future of smart agriculture</p>
+            </div>
+            <form id="register-form" class="auth-form grid-form">
+                <div class="input-group">
+                    <label for="fullName">Full Name</label>
+                    <div class="input-wrapper">
+                        <i class="ph ph-user"></i>
+                        <input type="text" id="fullName" placeholder="John Doe" required>
+                    </div>
+                </div>
+                <div class="input-group">
+                    <label for="email">Email Address</label>
+                    <div class="input-wrapper">
+                        <i class="ph ph-envelope"></i>
+                        <input type="email" id="email" placeholder="name@farm.com" required>
+                    </div>
+                </div>
+                <div class="input-group">
+                    <label for="phone">Phone Number</label>
+                    <div class="input-wrapper">
+                        <i class="ph ph-phone"></i>
+                        <input type="tel" id="phone" placeholder="+1 (555) 000-0000" required>
+                    </div>
+                </div>
+                <div class="input-group">
+                    <label for="farmName">Farm Name</label>
+                    <div class="input-wrapper">
+                        <i class="ph ph-plant"></i>
+                        <input type="text" id="farmName" placeholder="Green Valley Farm" required>
+                    </div>
+                </div>
+                <div class="input-group full-width">
+                    <label for="farmLocation">Farm Location</label>
+                    <div class="input-wrapper">
+                        <i class="ph ph-map-pin"></i>
+                        <input type="text" id="farmLocation" placeholder="California, USA" required>
+                    </div>
+                </div>
+                <div class="input-group">
+                    <label for="password">Password</label>
+                    <div class="input-wrapper">
+                        <i class="ph ph-lock"></i>
+                        <input type="password" id="password" placeholder="••••••••" required>
+                    </div>
+                </div>
+                <div class="input-group">
+                    <label for="confirmPassword">Confirm Password</label>
+                    <div class="input-wrapper">
+                        <i class="ph ph-lock"></i>
+                        <input type="password" id="confirmPassword" placeholder="••••••••" required>
+                    </div>
+                </div>
+                <button type="submit" class="btn btn-primary full-width mt-2">Create Account</button>
+            </form>
+            <div class="auth-footer">
+                <p>Already have an account? <a href="login.html">Login</a></p>
+            </div>
+        </div>
+    </div>
+    
+    <div id="toast-container"></div>
+    <script src="script.js?v=2"></script>
+</body>
+</html>
